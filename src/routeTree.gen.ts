@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnglePairsRouteImport } from './routes/angle-pairs'
 import { Route as ParallelLinesRouteImport } from './routes/parallel-lines'
+import { Route as ProofsRouteImport } from './routes/proofs'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const ParallelLinesRoute = ParallelLinesRouteImport.update({
   path: '/parallel-lines',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProofsRoute = ProofsRouteImport.update({
+  id: '/proofs',
+  path: '/proofs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/angle-pairs': typeof AnglePairsRoute
   '/parallel-lines': typeof ParallelLinesRoute
+  '/proofs': typeof ProofsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/angle-pairs': typeof AnglePairsRoute
   '/parallel-lines': typeof ParallelLinesRoute
+  '/proofs': typeof ProofsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/angle-pairs': typeof AnglePairsRoute
   '/parallel-lines': typeof ParallelLinesRoute
+  '/proofs': typeof ProofsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/angle-pairs' | '/parallel-lines'
+  fullPaths: '/' | '/angle-pairs' | '/parallel-lines' | '/proofs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/angle-pairs' | '/parallel-lines'
-  id: '__root__' | '/' | '/angle-pairs' | '/parallel-lines'
+  to: '/' | '/angle-pairs' | '/parallel-lines' | '/proofs'
+  id: '__root__' | '/' | '/angle-pairs' | '/parallel-lines' | '/proofs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnglePairsRoute: typeof AnglePairsRoute
   ParallelLinesRoute: typeof ParallelLinesRoute
+  ProofsRoute: typeof ProofsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ParallelLinesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/proofs': {
+      id: '/proofs'
+      path: '/proofs'
+      fullPath: '/proofs'
+      preLoaderRoute: typeof ProofsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnglePairsRoute: AnglePairsRoute,
   ParallelLinesRoute: ParallelLinesRoute,
+  ProofsRoute: ProofsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
