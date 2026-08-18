@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnglePairsRouteImport } from './routes/angle-pairs'
+import { Route as ParallelLinesRouteImport } from './routes/parallel-lines'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const AnglePairsRoute = AnglePairsRouteImport.update({
   path: '/angle-pairs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ParallelLinesRoute = ParallelLinesRouteImport.update({
+  id: '/parallel-lines',
+  path: '/parallel-lines',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/angle-pairs': typeof AnglePairsRoute
+  '/parallel-lines': typeof ParallelLinesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/angle-pairs': typeof AnglePairsRoute
+  '/parallel-lines': typeof ParallelLinesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/angle-pairs': typeof AnglePairsRoute
+  '/parallel-lines': typeof ParallelLinesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/angle-pairs'
+  fullPaths: '/' | '/angle-pairs' | '/parallel-lines'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/angle-pairs'
-  id: '__root__' | '/' | '/angle-pairs'
+  to: '/' | '/angle-pairs' | '/parallel-lines'
+  id: '__root__' | '/' | '/angle-pairs' | '/parallel-lines'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnglePairsRoute: typeof AnglePairsRoute
+  ParallelLinesRoute: typeof ParallelLinesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnglePairsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/parallel-lines': {
+      id: '/parallel-lines'
+      path: '/parallel-lines'
+      fullPath: '/parallel-lines'
+      preLoaderRoute: typeof ParallelLinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnglePairsRoute: AnglePairsRoute,
+  ParallelLinesRoute: ParallelLinesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
