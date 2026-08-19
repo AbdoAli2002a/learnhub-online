@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AnglePairsRouteImport } from './routes/angle-pairs'
 import { Route as ExercisesRouteImport } from './routes/exercises'
 import { Route as ParallelLinesRouteImport } from './routes/parallel-lines'
@@ -18,6 +19,11 @@ import { Route as ProofsRouteImport } from './routes/proofs'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesRoute = ActivitiesRouteImport.update({
+  id: '/activities',
+  path: '/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnglePairsRoute = AnglePairsRouteImport.update({
@@ -43,6 +49,7 @@ const ProofsRoute = ProofsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activities': typeof ActivitiesRoute
   '/angle-pairs': typeof AnglePairsRoute
   '/exercises': typeof ExercisesRoute
   '/parallel-lines': typeof ParallelLinesRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activities': typeof ActivitiesRoute
   '/angle-pairs': typeof AnglePairsRoute
   '/exercises': typeof ExercisesRoute
   '/parallel-lines': typeof ParallelLinesRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activities': typeof ActivitiesRoute
   '/angle-pairs': typeof AnglePairsRoute
   '/exercises': typeof ExercisesRoute
   '/parallel-lines': typeof ParallelLinesRoute
@@ -65,12 +74,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/angle-pairs' | '/exercises' | '/parallel-lines' | '/proofs'
+  fullPaths:
+    | '/'
+    | '/activities'
+    | '/angle-pairs'
+    | '/exercises'
+    | '/parallel-lines'
+    | '/proofs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/angle-pairs' | '/exercises' | '/parallel-lines' | '/proofs'
+  to:
+    | '/'
+    | '/activities'
+    | '/angle-pairs'
+    | '/exercises'
+    | '/parallel-lines'
+    | '/proofs'
   id:
     | '__root__'
     | '/'
+    | '/activities'
     | '/angle-pairs'
     | '/exercises'
     | '/parallel-lines'
@@ -79,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivitiesRoute: typeof ActivitiesRoute
   AnglePairsRoute: typeof AnglePairsRoute
   ExercisesRoute: typeof ExercisesRoute
   ParallelLinesRoute: typeof ParallelLinesRoute
@@ -92,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities': {
+      id: '/activities'
+      path: '/activities'
+      fullPath: '/activities'
+      preLoaderRoute: typeof ActivitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/angle-pairs': {
@@ -127,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivitiesRoute: ActivitiesRoute,
   AnglePairsRoute: AnglePairsRoute,
   ExercisesRoute: ExercisesRoute,
   ParallelLinesRoute: ParallelLinesRoute,
