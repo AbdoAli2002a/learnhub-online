@@ -19,7 +19,7 @@ export const Route = createFileRoute("/activities")({
       },
     ],
   }),
-  component: Activities;
+  component: Activities,
 });
 
 function Activities() {
